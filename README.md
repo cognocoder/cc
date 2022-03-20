@@ -1,7 +1,9 @@
 # `cc`
 
 `cc` is a C++ library to create graphical user interfaces with GLFW, OpenGL and 
-FreeType, tested with GoogleTest.
+FreeType.
+Tested with GoogleTest, documented using Doxygen and versioned with Git.
+
 
 ## Build & Run
 
@@ -23,8 +25,17 @@ times and enables faster development cycles.
 Alternatively, one can create an `all` target and manually invoke `make`,
 without using job slots.
 
-As you may have noted, `make clean` remove derived files and `make run` runs the
-application.
+As you may have noted, `make clean` remove derived files and `make run` runs
+the application.
+
+Be mindful that Make will use `find` to collect C and C++ sources, build object
+files with `gcc` and `g++`, respectively.
+During source files pre-processing, the compiler records dependencies, which are
+listed as so to produce the target executable image.
+This approach is not recommended, since every source file inside the directory
+tree will be included in the build proccess.
+However, the number of object files grew to fast and out of control.
+Any input in this manner is appreciated.
 
 
 ## Tests
@@ -32,6 +43,7 @@ application.
 
 
 
-## Docs
+## Documentation
 
+Documentation is generated from source files, by Doxygen.
 
