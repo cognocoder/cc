@@ -1,0 +1,7 @@
+
+# Build directory
+build
+
+# Executable Images
+*.app
+
