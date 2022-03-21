@@ -1,4 +1,4 @@
-# `cc`
+# Read me 
 
 `cc` is a C++ library to create graphical user interfaces with GLFW, OpenGL and 
 FreeType.
