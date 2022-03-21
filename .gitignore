@@ -1,6 +1,7 @@
 
-# Build directory
+# Build and documentation directories
 build
+doc
 
 # Executable Images
 *.app
