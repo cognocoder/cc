@@ -4,5 +4,6 @@ build
 doc
 
 # Executable Images
-*.app
+cc.app
+cc.tests
 
