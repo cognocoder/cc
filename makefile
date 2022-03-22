@@ -1,6 +1,9 @@
 
-# Final execution image
+# The application executable image
 BIN = cc.app
+
+# The tests executable image
+TESTS = cc.tests
 
 # GNU C/C++ compiler flags
 warnings = -Wall -Wextra -Werror -Wfatal-errors
@@ -49,17 +52,20 @@ LIBS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -lfreetype
 CPPFLAGS += -I/usr/include/freetype2
 
 # PHONY targets
-.PHONY: clean run _cmake cmake
+.PHONY: clean run tests _cmake cmake
 
 # Copy the executable image from build directory
 $(BIN): $(BUILD)/$(BIN)
 	@cp $(BUILD)/$(BIN) $(BIN)
 
-# Run the executable image
+# Run the application executable image
 run: $(BIN)
 	@echo " · enter $(BIN)"
 	@./$(BIN)
 	@echo
+
+# Run the tests executable image
+tests: $(TESTS)
 
 # Link object files into the executable image
 $(BUILD)/$(BIN): $(OBJ)
@@ -85,20 +91,27 @@ $(BUILD)/%.o: %.c
 
 # Remove derived files
 clean:
-	@rm -rf $(BUILD) $(BIN)
+	@rm -rf $(BUILD) $(BIN) $(TESTS)
 	@echo " · clean $(BUILD)"
 	@echo " · clean $(BIN)"
+	@echo " · clean $(TESTS)"
+	@echo
+
+# The tests are built using cmake
+$(TESTS): _cmake
+	@cd $(BUILD) && $(MAKE)
+	@cd ..
+	@echo && ./$(TESTS)
 	@echo
 
 # Generate build with CMake
 _cmake:
-	@cmake -S $(SOURCES) -B $(BUILD)
+	@cmake -S . -B $(BUILD)
 
 # Build with makefile created by CMake 
 cmake: _cmake
 	@cd $(BUILD) && $(MAKE)
 	@cd ..
-	@cp $(BUILD)/$(BIN) $(BIN)
-	@./$(BIN)
+	@echo && ./$(TESTS) && echo && ./$(BIN)
 	@echo
 
